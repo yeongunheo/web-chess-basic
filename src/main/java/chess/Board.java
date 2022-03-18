@@ -1,10 +1,11 @@
 package chess;
 
-import static java.util.Objects.isNull;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
 
 public final class Board {
 
@@ -25,6 +26,10 @@ public final class Board {
         return new Board(value);
     }
 
+    public void move(final String moveCommand) {
+        move(MoveCommand.of(moveCommand));
+    }
+
     public void move(final MoveCommand moveCommand) {
         final var piece = value.remove(moveCommand.from());
         if (isNull(piece)) {
@@ -34,7 +39,9 @@ public final class Board {
         value.put(moveCommand.to(), piece);
     }
 
-    public Map<Position, Piece> toMap() {
-        return new HashMap<>(value);
+    public Map<String, Piece> toMap() {
+        return value.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
     }
 }

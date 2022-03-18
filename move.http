@@ -1,3 +1,4 @@
 POST http://localhost:8081/move
 
-a1,a2
+command=a1,a2
+

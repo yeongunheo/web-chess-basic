@@ -10,6 +10,10 @@ public final class Piece {
         this.color = color;
     }
 
+    public String getColor() {
+        return color.name();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

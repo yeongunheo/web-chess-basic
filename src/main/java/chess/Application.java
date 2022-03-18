@@ -1,29 +1,28 @@
 package chess;
 
-import static spark.Spark.exception;
-import static spark.Spark.get;
-import static spark.Spark.port;
-import static spark.Spark.post;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import static spark.Spark.*;
 
 public class Application {
 
     public static void main(final String... args) {
         port(8081);
-
+        staticFileLocation("/static");
+        final var board = Board.create();
         get("/", (req, res) -> {
-            return new ModelAndView(null, "index.html");
+            return new ModelAndView(board.toMap(), "index.html");
         }, new HandlebarsTemplateEngine());
 
-        final var board = Board.create();
         post("/move", (req, res) -> {
-            final var moveRequest = MoveCommand.of(req.body());
-            board.move(moveRequest);
-
-            return board.toMap();
-        }, new JsonTransformer());
+            final var request = Request.of(req.body());
+            board.move(request.command());
+            res.redirect("/");
+            return null;
+        });
 
         exception(Exception.class, (exception, request, response) -> {
             response.status(400);
