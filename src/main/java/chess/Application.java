@@ -1,11 +1,13 @@
 package chess;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import static spark.Spark.exception;
+import static spark.Spark.get;
+import static spark.Spark.port;
+import static spark.Spark.post;
+import static spark.Spark.staticFileLocation;
+
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-
-import static spark.Spark.*;
 
 public class Application {
 

@@ -14,7 +14,7 @@ public final class MoveCommand {
     }
 
     public static MoveCommand of(final String value) {
-        final var splitValue = value.split(",");
+        final var splitValue = value.split(",|%2C");
         final var from = Position.of(splitValue[0]);
         final var to = Position.of(splitValue[1]);
 
